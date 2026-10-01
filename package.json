@@ -1,0 +1,13 @@
+{
+  "name": "job-search-wiki",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "node applications/_base/_verify.mjs",
+    "pdf": "node applications/_base/_gen-pdf.mjs",
+    "gate": "node applications/_pipeline/quality-gate.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.47.0"
+  }
+}

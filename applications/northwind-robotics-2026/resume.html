@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--
+  Northwind Robotics version: forked from _base/resume.html, tailored to fleet demand forecasting.
+  Gate: node _verify.mjs (print_overflow_px must be negative). PDF: node _gen-pdf.mjs.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Résumé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+@page { size: A4; margin: 0; }
+
+:root {
+  --body-size: 9.25pt;
+  --name-size: 32pt;
+  --section-num-size: 8.5pt;
+  --section-label-size: 11pt;
+  --line-height: 1.36;
+
+  --ink: #1A1818;
+  --muted: #6B6862;
+  --whisper: #B8B3AA;
+  --accent: #123C63;      
+  --paper: #FDFCF8;
+  --desk: #ECE9E1;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  background: var(--desk);
+}
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, system-ui, sans-serif;
+  font-size: var(--body-size);
+  line-height: var(--line-height);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+@media screen {
+  html { padding: 0.4in 0; min-height: 100vh; }
+  body {
+    width: 210mm; height: 297mm; margin: 0 auto;
+    padding: 0.285in 0.55in 0.285in 0.55in;
+    position: relative; overflow: visible;
+    box-shadow: 0 10px 32px rgba(40, 30, 20, 0.10);
+  }
+  body::after {
+    content: '— page end · anything below will not print —';
+    position: absolute; left: 0; right: 0; top: 297mm; margin-top: -0.5pt;
+    border-top: 1px dashed rgba(18, 60, 99, 0.45);
+    color: rgba(18, 60, 99, 0.55);
+    font-family: 'IBM Plex Mono', monospace; font-size: 7pt;
+    text-align: center; padding-top: 3pt; letter-spacing: 0.04em; pointer-events: none;
+  }
+}
+
+@media print {
+  html { background: #fff; padding: 0; }
+  body {
+    background: #fff; width: auto; height: auto; margin: 0;
+    padding: 0.285in 0.55in 0.285in 0.55in; box-shadow: none;
+  }
+  body::after { display: none; }
+}
+
+.hero { display: grid; grid-template-columns: 1fr auto; gap: 32pt; align-items: start; margin-bottom: 10pt; }
+.name { font-family: 'Fraunces', 'Charter', Georgia, serif; font-weight: 600; font-size: var(--name-size); letter-spacing: -1.2px; line-height: 0.95; color: var(--ink); }
+.tagline { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 8pt; font-weight: 400; letter-spacing: 0.02em; color: var(--muted); margin-top: 6pt; }
+.tagline em { font-style: normal; color: var(--accent); }
+.contact-block { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 7.5pt; line-height: 1.5; color: var(--muted); text-align: right; padding-top: 4pt; }
+.contact-block a { color: var(--muted); text-decoration: none; }
+
+.opening { font-family: 'Fraunces', 'Charter', Georgia, serif; font-size: 10pt; font-weight: 400; line-height: 1.4; color: var(--ink); margin-bottom: 10pt; text-align: justify; hyphens: auto; }
+
+section { margin-top: 6pt; }
+.section-head { display: grid; grid-template-columns: 28pt 1fr; gap: 12pt; align-items: baseline; margin-bottom: 4pt; }
+.section-num { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: var(--section-num-size); font-weight: 500; color: var(--accent); letter-spacing: 0.05em; border-top: 0.5pt solid var(--accent); padding-top: 3pt; }
+.label-note { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 7pt; font-weight: 400; letter-spacing: 0.05em; color: var(--muted); text-transform: none; }
+.section-label { font-family: 'Fraunces', 'Charter', Georgia, serif; font-size: var(--section-label-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.13em; color: var(--ink); border-top: 0.5pt solid var(--ink); padding-top: 3pt; }
+
+.entry { margin-bottom: 4pt; page-break-inside: avoid; }
+.entry:last-child { margin-bottom: 0; }
+.entry-head { display: grid; grid-template-columns: 1fr auto; gap: 18pt; align-items: baseline; margin-bottom: 1pt; }
+.entry-name { font-family: 'Fraunces', 'Charter', Georgia, serif; font-size: 10.5pt; font-weight: 600; color: var(--ink); }
+.entry-role { font-family: 'Fraunces', 'Charter', Georgia, serif; font-style: italic; font-weight: 400; color: var(--ink); }
+.entry-meta { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 7.5pt; color: var(--muted); white-space: nowrap; letter-spacing: 0.02em; }
+.entry-context { font-family: 'Fraunces', 'Charter', Georgia, serif; font-style: italic; font-size: 9pt; color: var(--muted); margin-top: 2pt; margin-bottom: 3pt; line-height: 1.4; }
+
+ul.bullets { list-style: none; padding-left: 0; margin-top: 2pt; }
+ul.bullets li { position: relative; padding-left: 12pt; margin-bottom: 2pt; line-height: 1.38; }
+ul.bullets li::before { content: "—"; position: absolute; left: 0; top: 0; color: var(--whisper); font-weight: 400; font-family: 'IBM Plex Sans', sans-serif; }
+
+.compact-row { display: grid; grid-template-columns: 1.55in 1fr auto; gap: 14pt; align-items: baseline; margin-bottom: 3pt; line-height: 1.35; }
+.compact-row:last-child { margin-bottom: 0; }
+.compact-name { font-family: 'Fraunces', 'Charter', Georgia, serif; font-size: 9.5pt; font-weight: 600; color: var(--ink); }
+.compact-detail { font-family: 'IBM Plex Sans', sans-serif; font-size: 9pt; color: var(--ink); }
+.compact-detail em { font-style: italic; color: var(--muted); }
+.compact-meta { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 7.5pt; color: var(--muted); white-space: nowrap; }
+
+.skills-row { display: grid; grid-template-columns: 1.55in 1fr; gap: 14pt; align-items: baseline; margin-bottom: 2pt; line-height: 1.4; }
+.skills-label { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 7.5pt; font-weight: 500; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+.skills-content { font-family: 'IBM Plex Sans', sans-serif; font-size: 9pt; color: var(--ink); }
+
+strong { font-weight: 600; color: var(--ink); }
+em { font-style: italic; }
+.dot { color: var(--whisper); margin: 0 0.3em; font-weight: 400; }
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div>
+    <div class="name">Alex Martin</div>
+    <div class="tagline">machine learning <em>·</em> forecasting <em>·</em> production systems</div>
+  </div>
+  <div class="contact-block">
+    Lyon <span class="dot">·</span> France<br>
+    alex.martin@example.com<br>
+    linkedin.com/in/example<br>
+    github.com/example
+  </div>
+</header>
+
+<p class="opening">
+Machine learning engineer with eight years in software and data, three of them shipping forecasting
+models to production. I take a model from a messy data source to a monitored service that operators
+trust, and I measure it against the baseline it replaces. <em>(Fictional example candidate.)</em>
+</p>
+
+<section>
+  <div class="section-head"><div class="section-num">01</div><div class="section-label">Experience</div></div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div><span class="entry-name">Independent</span> <span class="entry-role">— ML consultant</span></div>
+      <div class="entry-meta">Lyon <span class="dot">·</span> 2024&ndash;present</div>
+    </div>
+    <ul class="bullets">
+      <li>Two clients, a logistics start-up and a regional energy co-op: demand forecasting and route-time models, from scoping to monitoring.</li>
+      <li>Fixed-price scoping, weekly demos, and a hand-over pack so each client can run the system alone; demand forecasts now feed a fleet-sizing plan.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div><span class="entry-name">Contoso Energy</span> <span class="entry-role">— Data Scientist</span></div>
+      <div class="entry-meta">Paris <span class="dot">·</span> 2021&ndash;2024</div>
+    </div>
+    <ul class="bullets">
+      <li>Substation load forecasting with gradient boosting on weather and calendar features; <strong>12% lower forecast error</strong> than the baseline in a two-substation pilot.</li>
+      <li>Owned the pipeline from ingestion to a scheduled batch service with drift alerts and a weekly accuracy report.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div><span class="entry-name">Northwind Analytics</span> <span class="entry-role">— Software Engineer</span></div>
+      <div class="entry-meta">Paris <span class="dot">·</span> 2018&ndash;2021</div>
+    </div>
+    <ul class="bullets">
+      <li>Python and SQL data pipelines for retail clients; test coverage and CI on every repository.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="section-head"><div class="section-num">02</div><div class="section-label">Education</div></div>
+  <div class="compact-row">
+    <div class="compact-name">Fabrikam University</div>
+    <div class="compact-detail">MSc Applied Mathematics</div>
+    <div class="compact-meta">2017</div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head"><div class="section-num">03</div><div class="section-label">Skills</div></div>
+  <div class="skills-row"><div class="skills-label">Machine learning</div><div class="skills-content">Python <span class="dot">·</span> scikit-learn <span class="dot">·</span> XGBoost <span class="dot">·</span> time series <span class="dot">·</span> evaluation</div></div>
+  <div class="skills-row"><div class="skills-label">Production</div><div class="skills-content">SQL <span class="dot">·</span> Docker <span class="dot">·</span> CI/CD <span class="dot">·</span> monitoring</div></div>
+  <div class="skills-row"><div class="skills-label">Languages</div><div class="skills-content">English <em>(native)</em> <span class="dot">·</span> French <em>(professional)</em> <span class="dot">·</span> German <em>(basic)</em></div></div>
+</section>
+
+</body>
+</html>

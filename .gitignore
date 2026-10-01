@@ -1,0 +1,6 @@
+node_modules/
+*_verify-screenshot.png
+.env
+.DS_Store
+# In a real search, keep personal data out of git:
+# raw/
